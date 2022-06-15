@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import moment from "moment";
 import TableHeader from "./components/TableHeader";
 import TableBody from "./components/TableBody";
@@ -26,12 +26,27 @@ const dataFromBack = [
 const columns = ['Дата', 'Название', 'Количество', 'Расстояние']
 
 const TableScreen = () => {
+    const [data, setData] = useState([])
 
+    useEffect(()=> {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title: 'React POST Request Example' })
+        };
+        fetch('http://localhost:8810/api/get_table_data', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                if(data.success){
+                    setData(data.data)
+                }
+            });
+    },[])
     return (
         <div>
             <table>
                 <TableHeader columns={columns}/>
-                <TableBody data={dataFromBack}/>
+                <TableBody data={data}/>
             </table>
         </div>
     );

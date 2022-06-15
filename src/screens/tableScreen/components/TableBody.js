@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from "moment";
 
 const TableBody = ({data}) => {
     return (
@@ -8,7 +9,8 @@ const TableBody = ({data}) => {
             return (
                 <tr>
                     {rowKeys.map(key => {
-                        return <td>{row[key]}</td>
+                        let cellData = key === 'date' ? moment(row[key]).format("MMM Do YY") : row[key]
+                        return <td>{cellData}</td>
                     })}
                 </tr>
             )
