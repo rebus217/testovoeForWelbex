@@ -1,5 +1,5 @@
 import './App.css';
-import TableScreen from "./screens/TableScreen";
+import TableScreen from "./screens/tableScreen/TableScreen";
 
 function App() {
   return (
