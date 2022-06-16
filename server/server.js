@@ -7,7 +7,7 @@ const app = express();
 const jsonParser = express.json();
 const config = require('./config')
 
-const {pool} = require("./_db");
+const db = require("./_db");
 
 const readFile = util.promisify(fs.readFile)
 
@@ -35,21 +35,15 @@ app.get('/api/battles', jsonParser, async function (req, res) {
     }
 })
 app.post('/api/get_table_data', jsonParser, async function (req, res){
-    try{
-        let result = await pool.query(`
-    SELECT
-    date, 
-    name,
-    count,
-    distance
-    FROM table_data
-    `, (err, res) => {
-            if (err) throw new Error(err)
-            pool.end()
+    try {
+        db.query('SELECT date, name, count, distance FROM table_data', (err, result) => {
+            if (err)  throw new Error(err)
+            res.json({success: 1, data: result.rows})
         })
-        res.json({success: 1, data: result.rows})
-    } catch (e){
+
+    } catch (e) {
         console.error('/api/get_table_data Error:', e)
+        res.json({success: 0, error: e})
     }
 })
 

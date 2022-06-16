@@ -1,4 +1,5 @@
 import React from 'react';
+import '../TableScreen.css'
 
 const TableHeader = ({columns}) => {
     return (

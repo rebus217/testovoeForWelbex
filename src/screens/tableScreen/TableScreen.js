@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import moment from "moment";
 import TableHeader from "./components/TableHeader";
 import TableBody from "./components/TableBody";
+import './TableScreen.css'
+import ControlPanel from "./components/ControlPanel";
 
 const dataFromBack = [
     {
@@ -27,6 +29,7 @@ const columns = ['Дата', 'Название', 'Количество', 'Рас
 
 const TableScreen = () => {
     const [data, setData] = useState([])
+    const [filteredData, setFilteredData] = useState(data)
 
     useEffect(()=> {
         const requestOptions = {
@@ -42,11 +45,46 @@ const TableScreen = () => {
                 }
             });
     },[])
+
+    useEffect(()=> {
+        setFilteredData(data)
+    },[data])
+
+
+    function onSort(option){
+     switch (option.id){
+         case 'distance_down' :
+             setFilteredData([...data].sort((first, second) =>  second.distance - first.distance  ))
+             break;
+         case 'distance_up' :
+             setFilteredData([...data].sort((first, second) => first.distance - second.distance ))
+             break;
+         case 'count_down' :
+             setFilteredData([...data].sort((first, second) =>  second.count - first.count  ))
+             break;
+         case 'count_up' :
+             setFilteredData([...data].sort((first, second) => first.count - second.count ))
+             break;
+         case 'name_A-Z' :
+             setFilteredData([...data].sort((first, second) =>  first.name.localeCompare(second.name)  ))
+             break;
+         case 'name_Z-A' :
+             setFilteredData([...data].sort((first, second) =>  second.name.localeCompare(first.name)  ))
+             break;
+         case 'initial' :
+             setFilteredData([...data])
+             break;
+         default:
+             break
+     }
+    }
+
     return (
-        <div>
-            <table>
+        <div className={'Container'}>
+            <ControlPanel onSort={onSort}/>
+            <table >
                 <TableHeader columns={columns}/>
-                <TableBody data={data}/>
+                <TableBody data={filteredData}/>
             </table>
         </div>
     );

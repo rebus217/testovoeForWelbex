@@ -1,0 +1,97 @@
+.Container {
+height: 100vh;
+}
+table, th, td {
+    border: 1px solid;
+    text-align: left;
+}
+th, td {
+    padding-left: 10px;
+}
+
+table {
+    width: 90vw;
+    max-height: 90vh;
+    border-collapse: collapse;
+    margin-left: 5vw;
+    margin-top: 1vw;
+}
+
+th {
+    height: 4vw;
+    background-color:blanchedalmond;
+}
+
+td {
+    height: 2vw;
+}
+
+tr {
+background-color: beige;
+}
+
+tr:hover, tr:nth-child(even):hover {
+    background-color:coral;
+}
+tr:nth-child(even) {
+    background-color: antiquewhite;
+}
+
+.control_panel_container {
+    background-color:#61dafb;
+    width: 90vw;
+    margin-left: 5vw;
+    display: flex;
+    flex-direction: row;
+}
+.dropDownSortContent, .dropDownFilterContentColumn {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.dropDownSortContent div {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    border-bottom: 1px solid;
+    cursor: pointer;
+}
+
+.dropDownSortContent div:hover {
+    background-color: #ddd
+}
+
+.dropDownSort {
+    position: relative;
+    display: inline-block;
+}
+.resetSort {
+    background-color: #3498DB;
+    color: white;
+    padding: 14px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+}
+.sortButton {
+    background-color: #3498DB;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+.sortButton:hover , .sortButton:focus {
+    background-color: #2980B9;
+}
+
+.show {display:block;}
+
+.sortControls {
+    display: flex;
+}
