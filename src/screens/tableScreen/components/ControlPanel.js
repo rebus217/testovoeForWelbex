@@ -29,6 +29,11 @@ const sortOptions = [
 
 ]
 
+const initialOption = {
+    name: 'Сортировать по: ',
+    id: 'initial'
+}
+
 const columns = [
     {
         name: 'Расстоянию',
@@ -44,35 +49,14 @@ const columns = [
     },
 ]
 
-const initialOption = {
-    name: 'Сортировать по: ',
-    id: 'initial'
-}
+
 
 function ControlPanel(props) {
     const {onSort} = props;
     const [isVisibleSort, setIsVisibleSort] = useState(false);
-    const [isVisibleFilterColum, setIsVisibleFilterColumn] = useState(false);
+    const [isVisibleFilterColumn, setIsVisibleFilterColumn] = useState(false);
     const [activeOption, setActiveOption] = useState(initialOption);
-    const [dropDownContent, setDropDownContent] = useState('dropDownSortContent');
-    const [dropDownFilterContent, setDropDownFilterContent] = useState('dropDownFilterContentColumn');
-
-
-    function onSwitchVisibleDropDown (type) {
-        switch (type) {
-            case 'sort' :
-                setIsVisibleSort(!isVisibleSort)
-                break;
-            case 'filterColumn':
-                setIsVisibleFilterColumn(!isVisibleFilterColum)
-        }
-    }
-
-    function onClickSortOption (option) {
-        onSort(option)
-        setIsVisibleSort(!isVisibleSort)
-        setActiveOption({...option})
-    }
+    const [activeColumnFilter, setActiveColumnFilter] = useState(initialOption);
 
     function onClickColumnFilter (option) {
     }
@@ -80,43 +64,69 @@ function ControlPanel(props) {
     function resetFilters () {
         onSort(initialOption)
         setIsVisibleSort(false)
-        setActiveOption(initialOption)
     }
 
-    useEffect(()=> {
-        if(isVisibleSort) setDropDownContent(dropDownContent + ' show');
-        if(!isVisibleSort) setDropDownContent('dropDownSortContent');
 
-        if(isVisibleFilterColum) setDropDownFilterContent(dropDownFilterContent + ' show');
-        if(!isVisibleFilterColum) setDropDownFilterContent('dropDownFilterContentColumn');
+    const DropDownList = (props) => {
+        const {
+            list,
+            onClickOption,
+            setIsVisible,
+            isVisible,
+            activeOption,
+            setActiveOption
+        } = props
 
-    },[isVisibleSort, isVisibleFilterColum])
 
-    // console.log('aaaaa', isVisibleSort)
+
+        function selectOption(option) {
+            setActiveOption({...option});
+            onClickOption(option);
+            setIsVisible(!isVisible);
+        }
+
+      return(
+              <div className={'dropDownSort'}>
+                  <button className={'sortButton'} onClick={() => setIsVisible(!isVisible)}>{activeOption.name}</button>
+                  {isVisible && <div id={'dropDownSort'} className={'dropDownSortContent'}>
+                      {list.map(option => {
+                          return (
+                              <div
+                                  key={option.name}
+                                  onClick={() => selectOption(option)}
+                              >
+                                  {option.name}
+                              </div>
+                          )
+                      })}
+                  </div>}
+              </div>
+          )
+
+    }
+
     return (
         <div className={'control_panel_container'}>
             <div className={'sortControls'}>
-                <div className={'dropDownSort'}>
-                    <button className={'sortButton'} onClick={() => onSwitchVisibleDropDown('sort')}>{activeOption.name}</button>
-                    <div id={'dropDownSort'} className={dropDownContent}>
-                        {sortOptions.map(option => {
-                            return <div key={option.name} onClick={() => onClickSortOption(option) }>{option.name}</div>
-                        })}
-                    </div>
-                </div>
+                <DropDownList
+                    list={sortOptions}
+                    onClickOption={onSort}
+                    isVisible={isVisibleSort}
+                    setIsVisible={setIsVisibleSort}
+                    activeOption={activeOption}
+                    setActiveOption={setActiveOption}
+                />
                 <div className={'resetSort'} onClick={()=> resetFilters()}>Сбросить</div>
             </div>
-            <div className={'filterControls'}>
-                <span>Фильтр по: </span>
-                <div className={'dropDownSort'}>
-                    <button className={'filterColumnButton'} onClick={() => onSwitchVisibleDropDown('filterColumn')}>Колонке</button>
-                    <div id={'dropDownSort'} className={dropDownFilterContent}>
-                        {columns.map(column => {
-                            return <div key={column.name} onClick={() => console.log(column) }>{column.name}</div>
-                        })}
-                    </div>
-                </div>
-            </div>
+            <span>Фильтр по </span>
+            <DropDownList
+                list={columns}
+                onClickOption={() => console.log('column')}
+                setIsVisible={setIsVisibleFilterColumn}
+                isVisible={isVisibleFilterColumn}
+                activeOption={activeColumnFilter}
+                setActiveOption={setActiveColumnFilter}
+            />
         </div>
     );
 }

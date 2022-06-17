@@ -45,7 +45,7 @@ tr:nth-child(even) {
     flex-direction: row;
 }
 .dropDownSortContent, .dropDownFilterContentColumn {
-    display: none;
+    display: block;
     position: absolute;
     background-color: #f1f1f1;
     min-width: 160px;
