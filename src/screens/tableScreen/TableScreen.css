@@ -38,13 +38,15 @@ tr:nth-child(even) {
 }
 
 .control_panel_container {
-    background-color:#61dafb;
     width: 90vw;
     margin-left: 5vw;
     display: flex;
     flex-direction: row;
+    margin-top: 1vw;
+    align-items: center;
 }
-.dropDownSortContent, .dropDownFilterContentColumn {
+
+.dropDownSortContent {
     display: block;
     position: absolute;
     background-color: #f1f1f1;
@@ -69,29 +71,48 @@ tr:nth-child(even) {
     position: relative;
     display: inline-block;
 }
-.resetSort {
-    background-color: #3498DB;
-    color: white;
-    padding: 14px;
-    font-size: 14px;
-    border: none;
-    cursor: pointer;
-    margin-left: 10px;
-}
 .sortButton {
     background-color: #3498DB;
     color: white;
-    padding: 16px;
     font-size: 16px;
     border: none;
+    border-radius: 10px;
     cursor: pointer;
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-left: 6px;
+    padding-right: 6px;
 }
+.filterInput {
+    font-size: 16px;
+    height: 34px;
+}
+
 .sortButton:hover , .sortButton:focus {
     background-color: #2980B9;
 }
 
-.show {display:block;}
-
-.sortControls {
+.pagesContainer {
     display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.pageNumber {
+    font-size: 20px;
+    margin-left: 6px;
+    cursor: pointer;
+   width: 20px;
+}
+
+.pageActive{
+    background-color: #3498DB;
+
 }
